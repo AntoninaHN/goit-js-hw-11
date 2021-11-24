@@ -1,5 +1,5 @@
 import './sass/main.scss';
-import { getImages } from './api';
+import { getImages, resetPage } from './api';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -28,6 +28,7 @@ refs.loadBtn.addEventListener('click', onLoad);
 function onSearch(event) {
   event.preventDefault();
   element = event.currentTarget.searchQuery.value;
+  resetPage();
   hideBtn(refs.loadBtn);
   getImages(element).then(images => {
     const imagesArr = images.data.hits;
@@ -81,8 +82,7 @@ function renderGallery(images) {
   refs.gallery.insertAdjacentHTML('beforeend', markup);
 }
 
-function onLoad(event) {
-  event.preventDefault();
+function onLoad() {
   getImages(element)
     .then(images => {
       const imagesArr = images.data.hits;
@@ -94,12 +94,12 @@ function onLoad(event) {
       }
 
       renderGallery(imagesArr);
-      new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
+      new SimpleLightbox('.gallery a', { captionDelay: 250, showCounter: false });
     })
 
     .catch(error => {
       console.log(error);
-      Notiflix.Notify.failure('We are sorry, but you have reached the end of search results.');
+      // Notiflix.Notify.failure('We are sorry, but you have reached the end of search results.');
       hideBtn(refs.loadBtn);
     });
 }

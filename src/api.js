@@ -1,5 +1,5 @@
 const axios = require('axios').default;
-export { getImages };
+export { getImages, resetPage };
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API = '24482250-ff2a48ff2cbe8defcdea0f664';
@@ -14,4 +14,8 @@ async function getImages(requestValue) {
   } catch (error) {
     console.log(error);
   }
+}
+
+function resetPage() {
+  let page = 1;
 }
