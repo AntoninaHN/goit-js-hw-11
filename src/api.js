@@ -17,5 +17,5 @@ async function getImages(requestValue) {
 }
 
 function resetPage() {
-  let page = 1;
+  page = 1;
 }
