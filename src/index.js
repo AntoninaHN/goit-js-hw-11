@@ -1,5 +1,5 @@
 import './sass/main.scss';
-import { getImages, resetPage } from './api';
+import { getImages } from './api';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -28,7 +28,6 @@ refs.loadBtn.addEventListener('click', onLoad);
 function onSearch(event) {
   event.preventDefault();
   element = event.currentTarget.searchQuery.value;
-  resetPage();
   hideBtn(refs.loadBtn);
   getImages(element).then(images => {
     const imagesArr = images.data.hits;
@@ -39,14 +38,13 @@ function onSearch(event) {
       return Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again 😱',
       );
-    } else {
-      clearGallery();
-      renderGallery(imagesArr);
-      refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
-      new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
-      Notiflix.Notify.success(`Hooray🎉 We found ${totalImages} images.`);
-      showBtn(refs.loadBtn);
     }
+    clearGallery();
+    renderGallery(imagesArr);
+    //refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
+    new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
+    Notiflix.Notify.success(`Hooray🎉 We found ${totalImages} images.`);
+    showBtn(refs.loadBtn);
   });
 }
 
@@ -83,7 +81,8 @@ function renderGallery(images) {
   refs.gallery.insertAdjacentHTML('beforeend', markup);
 }
 
-function onLoad() {
+function onLoad(event) {
+  event.preventDefault();
   getImages(element)
     .then(images => {
       const imagesArr = images.data.hits;

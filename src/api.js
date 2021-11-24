@@ -1,5 +1,5 @@
 const axios = require('axios').default;
-export { getImages, resetPage };
+export { getImages };
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API = '24482250-ff2a48ff2cbe8defcdea0f664';
@@ -15,26 +15,3 @@ async function getImages(requestValue) {
     console.log(error);
   }
 }
-
-function resetPage() {
-  let page = 1;
-}
-
-// export default {
-//   BASE_URL: 'https://pixabay.com/api/',
-//   API: '24482250-ff2a48ff2cbe8defcdea0f664',
-//   page: 1,
-//   VALUE: '&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=',
-
-//   async getImages(requestValue) {
-//     try {
-//       const images = await axios.get(
-//         `${this.BASE_URL}?key=${this.API}&q=${requestValue}${this.VALUE}${this.page}`,
-//       );
-//       // page += 1;
-//       return images;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   },
-// };
