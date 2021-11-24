@@ -3,7 +3,6 @@ import { getImages, resetPage } from './api';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-//import { parseWithoutProcessing } from 'handlebars';
 //import renderGallery from './render-gallery';
 
 function hideBtn(item) {
@@ -28,7 +27,6 @@ refs.loadBtn.addEventListener('click', onLoad);
 
 function onSearch(event) {
   event.preventDefault();
-
   element = event.currentTarget.searchQuery.value;
   resetPage();
   hideBtn(refs.loadBtn);
@@ -39,11 +37,12 @@ function onSearch(event) {
     if (imagesArr.length === 0) {
       clearGallery();
       return Notiflix.Notify.failure(
-        'Sorry, there are no images matching your search query. Please try again 😱',
+        'Sorry, there are no images matching your search query. Please try again 😱',
       );
     } else {
       clearGallery();
       renderGallery(imagesArr);
+      refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
       new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
       Notiflix.Notify.success(`Hooray🎉 We found ${totalImages} images.`);
       showBtn(refs.loadBtn);
@@ -79,7 +78,8 @@ function renderGallery(images) {
         </div>
           </a>`;
     })
-    .join('');
+    .join(' ');
+
   refs.gallery.insertAdjacentHTML('beforeend', markup);
 }
 
