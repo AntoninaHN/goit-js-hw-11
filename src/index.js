@@ -94,7 +94,7 @@ function onLoad(event) {
       }
 
       renderGallery(imagesArr);
-      new SimpleLightbox('.gallery a', { captionDelay: 250, showCounter: false });
+      new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
     })
 
     .catch(error => {
