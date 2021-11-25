@@ -43,7 +43,7 @@ function onSearch(event) {
     clearGallery();
     renderGallery(imagesArr);
     //refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
-    new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
+    new SimpleLightbox('.gallery a', {});
     Notiflix.Notify.success(`Hooray🎉 We found ${totalImages} images.`);
     showBtn(refs.loadBtn);
   });
@@ -94,7 +94,7 @@ function onLoad() {
       }
 
       renderGallery(imagesArr);
-      new SimpleLightbox('.gallery a', { captionDelay: 250, showCounter: false });
+      new SimpleLightbox('.gallery a', {});
     })
 
     .catch(error => {
