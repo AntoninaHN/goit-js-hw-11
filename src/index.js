@@ -3,7 +3,7 @@ import { getImages, resetPage } from './api';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-//import renderGallery from './render-gallery';
+import renderGallery from './render-gallery';
 
 function hideBtn(item) {
   item.classList.add('visually-hidden');
@@ -41,46 +41,46 @@ function onSearch(event) {
       );
     }
     clearGallery();
-    renderGallery(imagesArr);
-    //refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
-    new SimpleLightbox('.gallery a', {});
+    //renderGallery(imagesArr);
+    refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
+    new SimpleLightbox('.gallery a', { captionsDelay: 250 });
     Notiflix.Notify.success(`Hooray🎉 We found ${totalImages} images.`);
     showBtn(refs.loadBtn);
   });
 }
 
-function renderGallery(images) {
-  const markup = images
-    .map(image => {
-      return `
-          <a class="gallery-link" href="${image.largeImageURL}">
-        <div class="photo-card">
-        <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
-        <div class="info">
-        <p class="info-item">
-        <b>Likes</b>
-        ${image.likes}
-        </p>
-        <p class="info-item">
-        <b>Views</b>
-        ${image.views}
-        </p>
-        <p class="info-item">
-        <b>Comments</b>
-        ${image.comments}
-        </p>
-        <p class="info-item">
-        <b>Downloads</b>
-        ${image.downloads}
-        </p>
-        </div>
-        </div>
-          </a>`;
-    })
-    .join(' ');
+// function renderGallery(images) {
+//   const markup = images
+//     .map(image => {
+//       return `
+//           <a class="gallery-link" href="${image.largeImageURL}">
+//         <div class="photo-card">
+//         <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
+//         <div class="info">
+//         <p class="info-item">
+//         <b>Likes</b>
+//         ${image.likes}
+//         </p>
+//         <p class="info-item">
+//         <b>Views</b>
+//         ${image.views}
+//         </p>
+//         <p class="info-item">
+//         <b>Comments</b>
+//         ${image.comments}
+//         </p>
+//         <p class="info-item">
+//         <b>Downloads</b>
+//         ${image.downloads}
+//         </p>
+//         </div>
+//         </div>
+//           </a>`;
+//     })
+//     .join(' ');
 
-  refs.gallery.insertAdjacentHTML('beforeend', markup);
-}
+//   refs.gallery.insertAdjacentHTML('beforeend', markup);
+// }
 
 function onLoad() {
   getImages(element)
@@ -93,8 +93,9 @@ function onLoad() {
         return;
       }
 
-      renderGallery(imagesArr);
-      new SimpleLightbox('.gallery a', {});
+      //renderGallery(imagesArr);
+      refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
+      new SimpleLightbox('.gallery a', { captionsDelay: 250 });
     })
 
     .catch(error => {
