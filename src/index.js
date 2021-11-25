@@ -3,7 +3,9 @@ import { getImages, resetPage } from './api';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-//import renderGallery from './render-gallery';
+import renderGallery from './render-gallery';
+
+const simpleLightbox = new SimpleLightbox('.gallery a', { captionData: 'alt', captionDelay: 250 });
 
 function hideBtn(item) {
   item.classList.add('visually-hidden');
@@ -41,45 +43,13 @@ function onSearch(event) {
       );
     }
     clearGallery();
-    renderGallery(imagesArr);
-    //refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
-    new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
+    //renderGallery(imagesArr);
+    refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
+
+    simpleLightbox.refresh();
     Notiflix.Notify.success(`Hooray🎉 We found ${totalImages} images.`);
     showBtn(refs.loadBtn);
   });
-}
-
-function renderGallery(images) {
-  const markup = images
-    .map(image => {
-      return `
-          <a class="gallery-link" href="${image.largeImageURL}">
-        <div class="photo-card">
-        <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
-        <div class="info">
-        <p class="info-item">
-        <b>Likes</b>
-        ${image.likes}
-        </p>
-        <p class="info-item">
-        <b>Views</b>
-        ${image.views}
-        </p>
-        <p class="info-item">
-        <b>Comments</b>
-        ${image.comments}
-        </p>
-        <p class="info-item">
-        <b>Downloads</b>
-        ${image.downloads}
-        </p>
-        </div>
-        </div>
-          </a>`;
-    })
-    .join(' ');
-
-  refs.gallery.insertAdjacentHTML('beforeend', markup);
 }
 
 function onLoad() {
@@ -92,9 +62,12 @@ function onLoad() {
         hideBtn(refs.loadBtn);
         return;
       }
+      //renderGallery(imagesArr);
+      refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
 
-      renderGallery(imagesArr);
-      new SimpleLightbox('.gallery a', { captionDelay: 250, showCounter: false });
+      simpleLightbox.refresh();
+
+      return;
     })
 
     .catch(error => {
@@ -106,3 +79,36 @@ function onLoad() {
 function clearGallery() {
   refs.gallery.innerHTML = '';
 }
+
+// function renderGallery(images) {
+//   const markup = images
+//     .map(image => {
+//       return `
+//           <a class="gallery-link" href="${image.largeImageURL}">
+//         <div class="photo-card">
+//         <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
+//         <div class="info">
+//         <p class="info-item">
+//         <b>Likes</b>
+//         ${image.likes}
+//         </p>
+//         <p class="info-item">
+//         <b>Views</b>
+//         ${image.views}
+//         </p>
+//         <p class="info-item">
+//         <b>Comments</b>
+//         ${image.comments}
+//         </p>
+//         <p class="info-item">
+//         <b>Downloads</b>
+//         ${image.downloads}
+//         </p>
+//         </div>
+//         </div>
+//           </a>`;
+//     })
+//     .join(' ');
+
+//   refs.gallery.insertAdjacentHTML('beforeend', markup);
+// }
