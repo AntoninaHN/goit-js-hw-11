@@ -53,7 +53,7 @@ function renderGallery(images) {
   const markup = images
     .map(image => {
       return `
-          <a class="gallery-item" href="${image.largeImageURL}">
+          <a class="gallery-link" href="${image.largeImageURL}">
         <div class="photo-card">
         <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
         <div class="info">
@@ -99,7 +99,6 @@ function onLoad() {
 
     .catch(error => {
       console.log(error);
-      // Notiflix.Notify.failure('We are sorry, but you have reached the end of search results.');
       hideBtn(refs.loadBtn);
     });
 }

@@ -96,7 +96,7 @@ a {
   margin-left: -15px;
 }
 
-.gallery-item {
+.gallery-link {
   margin-top: 15px;
   margin-left: 15px;
   flex-basis: calc((100% - 75px) / 5);
@@ -104,8 +104,8 @@ a {
   transition-duration: 0.3s;
 }
 
-.gallery-item:hover,
-.gallery-item:focus {
+.gallery-link:hover,
+.gallery-link:focus {
   -webkit-transform: scale(1.05);
   transform: scale(1.05);
 }
