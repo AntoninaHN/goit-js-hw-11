@@ -40,10 +40,28 @@ function onSearch(event) {
         'Sorry, there are no images matching your search query. Please try again 😱',
       );
     }
+    if (imagesArr.length < 40) {
+      clearGallery();
+      //renderGallery(imagesArr);
+      refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
+      new SimpleLightbox('.gallery a', {
+        showCounter: false,
+        animationSpeed: 500,
+        navText: ['←', '→'],
+      });
+      Notiflix.Notify.success(`Hooray🎉 We found ${totalImages} images.`);
+      Notiflix.Notify.failure('We are sorry, but you have reached the end of search results.');
+      hideBtn(refs.loadBtn);
+      return;
+    }
     clearGallery();
     //renderGallery(imagesArr);
     refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
-    new SimpleLightbox('.gallery a', { captionsDelay: 250 });
+    new SimpleLightbox('.gallery a', {
+      showCounter: false,
+      animationSpeed: 500,
+      navText: ['←', '→'],
+    });
     Notiflix.Notify.success(`Hooray🎉 We found ${totalImages} images.`);
     showBtn(refs.loadBtn);
   });
@@ -62,7 +80,25 @@ function onLoad() {
 
       //renderGallery(imagesArr);
       refs.gallery.insertAdjacentHTML('beforeend', renderGallery(imagesArr));
-      new SimpleLightbox('.gallery a', { captionsDelay: 250 });
+      new SimpleLightbox('.gallery a', {
+        showCounter: false,
+        animationSpeed: 500,
+        navText: ['←', '→'],
+      });
+      // window.scrollTo({
+      //   top: 0,
+      //   left: 100,
+      //   behavior: 'smooth',
+      // });
+      // window.scrollTo(0, 500);
+      const { height: cardHeight } = document
+        .querySelector('.gallery')
+        .firstElementChild.getBoundingClientRect();
+
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+      });
     })
 
     .catch(error => {
@@ -107,3 +143,27 @@ function clearGallery() {
 
 //   refs.gallery.insertAdjacentHTML('beforeend', markup);
 // }
+
+function trackScroll() {
+  const scrolled = window.pageYOffset;
+  const coords = document.documentElement.clientHeight;
+
+  if (scrolled > coords) {
+    goTopBtn.classList.add('back_to_top-show');
+  }
+  if (scrolled < coords) {
+    goTopBtn.classList.remove('back_to_top-show');
+  }
+}
+
+function backToTop() {
+  if (window.pageYOffset > 0) {
+    window.scrollBy(0, -80);
+    setTimeout(backToTop, 0);
+  }
+}
+
+const goTopBtn = document.querySelector('.back_to_top');
+
+window.addEventListener('scroll', trackScroll);
+goTopBtn.addEventListener('click', backToTop);
